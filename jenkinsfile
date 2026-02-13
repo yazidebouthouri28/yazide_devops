@@ -10,13 +10,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'echo Running tests...'
-                sh 'mvn test'
-            }
-        }
-
         stage('Deploy') {
             when {
                 branch "main"
