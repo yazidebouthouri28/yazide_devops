@@ -1,6 +1,8 @@
 pipeline {
     agent any
 
+    stages {
+
         stage('Build') {
             steps {
                 sh 'echo Building...'
@@ -17,12 +19,13 @@ pipeline {
 
         stage('Deploy') {
             when {
-                branch main
+                branch "main"
             }
             steps {
                 sh 'echo Deploying to server...'
-                sh 'scp targetapp.jar user@serveroptapp'
+                sh 'scp target/app.jar user@server:/opt/app/'
             }
         }
+
     }
 }
