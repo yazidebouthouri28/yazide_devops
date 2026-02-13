@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git 'httpsgithub.comuserrepo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'echo Building...'
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'echo Running tests...'
+                sh 'mvn test'
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch main
+            }
+            steps {
+                sh 'echo Deploying to server...'
+                sh 'scp targetapp.jar user@serveroptapp'
+            }
+        }
+    }
+}
