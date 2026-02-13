@@ -5,20 +5,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'echo Building...'
-                sh 'mvn clean package'
+                sh 'mvn clean install -DskipTests'
             }
         }
 
-        stage('Deploy') {
-            when {
-                branch "main"
-            }
+        stage('Package') {
             steps {
-                sh 'echo Deploying to server...'
-                sh 'scp target/app.jar user@server:/opt/app/'
+                sh 'mvn package -DskipTests'
             }
         }
-
     }
 }
